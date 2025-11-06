@@ -2,9 +2,9 @@
 
 #include "hardwareDescription/hardwareDescription.h"
 
-#define AMT10V_A_Pin 0;
-#define AMT10V_B_Pin 1;
-#define AMT10V_X_Pin 2;
+#define AMT10V_A_Pin 0
+#define AMT10V_B_Pin 1
+#define AMT10V_X_Pin 2
 
 enum AMT10VResolution {
     AMT10V_48 = 48,
@@ -32,6 +32,8 @@ struct AMT10VEncoder {
     int tickCount;
     int indexCount;
     void (*readEncoder)(AMT10VEncoder*);
+    int prevTick;
+    int prevIndex;
 };
 
 AMT10VEncoder initAMT10VEncoder(uint8_t pinA, uint8_t pinB, uint8_t pinX, AMT10VResolution resolution);
