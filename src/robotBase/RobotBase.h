@@ -11,6 +11,6 @@ inline struct RobotBase {
     int loopTimeMs;
 } robot;
 
-void initRobot();
+void initRobot(int loopTimeMs);
 
 void registerEncoder(void* encoder, encoderType type);
