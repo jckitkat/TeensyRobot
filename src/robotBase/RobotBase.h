@@ -5,10 +5,10 @@
 #include "device/encoderType.h"
 
 inline struct RobotBase {
-    void** encoders;
-    encoderType* encoderTypes;
+    void** encoders = nullptr;
+    encoderType* encoderTypes = nullptr;
     size_t encoderCount = 0;
-    int loopTimeMs;
+    int loopTimeMs = 10;
 } robot;
 
 void initRobot(int loopTimeMs);

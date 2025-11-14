@@ -26,7 +26,7 @@ enum AMT10VResolution {
 };
 
 // Structure to represent the AMT10V encoder
-struct AMT10VEncoder {
+typedef struct AMT10VEncoder {
     descriptor hardwareDescriptor;
     AMT10VResolution resolution;
     int tickCount;
@@ -34,8 +34,8 @@ struct AMT10VEncoder {
     void (*readEncoder)(AMT10VEncoder*);
     int prevTick;
     int prevIndex;
-};
+} AMT10VEncoder_t;
 
-AMT10VEncoder initAMT10VEncoder(uint8_t pinA, uint8_t pinB, uint8_t pinX, AMT10VResolution resolution);
+AMT10VEncoder_t initAMT10VEncoder(uint8_t pinA, uint8_t pinB, uint8_t pinX, AMT10VResolution resolution);
 
-void readAMT10VEncoder(AMT10VEncoder* encoder);
+void readAMT10VEncoder(AMT10VEncoder_t* encoder);

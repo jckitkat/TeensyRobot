@@ -12,13 +12,13 @@ AMT10VEncoder initAMT10VEncoder(uint8_t pinA, uint8_t pinB, uint8_t pinX, AMT10V
     descriptor.pins[AMT10V_B_Pin] = pinB;
     descriptor.pins[AMT10V_X_Pin] = pinX;
 
-    descriptor.currentPinModes[AMT10V_A_Pin] = INPUT;
-    descriptor.currentPinModes[AMT10V_B_Pin] = INPUT;
-    descriptor.currentPinModes[AMT10V_X_Pin] = INPUT;
+    descriptor.currentPinModes[AMT10V_A_Pin] = INPUT_PULLDOWN;
+    descriptor.currentPinModes[AMT10V_B_Pin] = INPUT_PULLDOWN;
+    descriptor.currentPinModes[AMT10V_X_Pin] = INPUT_PULLDOWN;
 
-    pinMode(pinA, INPUT);
-    pinMode(pinB, INPUT);
-    pinMode(pinX, INPUT);
+    pinMode(pinA, INPUT_PULLDOWN);
+    pinMode(pinB, INPUT_PULLDOWN);
+    pinMode(pinX, INPUT_PULLDOWN);
 
     encoder.resolution = resolution;
     encoder.tickCount = 0;
@@ -27,7 +27,6 @@ AMT10VEncoder initAMT10VEncoder(uint8_t pinA, uint8_t pinB, uint8_t pinX, AMT10V
 
     encoder.hardwareDescriptor = descriptor;
 
-    registerEncoder(&encoder, AMT10V);
 
     return encoder;
 }
@@ -37,13 +36,15 @@ void readAMT10VEncoder(AMT10VEncoder* encoder) {
     int tickB = digitalRead(encoder->hardwareDescriptor.pins[AMT10V_B_Pin]);
     int index = digitalRead(encoder->hardwareDescriptor.pins[AMT10V_X_Pin]);
 
+    // Serial.printf("TickA: %d, TickB: %d, Index: %d\n", tickA, tickB, index);
+
     if (tickA != encoder->prevTick) {
         if (tickA != tickB) {
-            encoder->tickCount++;
+            encoder->tickCount += tickA;
             encoder->prevTick = tickA;
         } else {
-            encoder->tickCount--;
-            encoder->prevTick = tickB;
+            encoder->tickCount -= tickA;
+            encoder->prevTick = tickA;
         }
     }
 
