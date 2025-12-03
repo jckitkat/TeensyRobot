@@ -1,8 +1,6 @@
 #pragma once
 #include "hardwareDescription/hardwareDescription.h"
-#include "device/DCMotor/DCMotor.h"
-#include "device/AMT10VEncoder/AMT10VEncoder.h"
-#include "device/encoderType.h"
+#include "../device/Encoders/encoderType.h"
 
 inline struct RobotBase {
     void** encoders = nullptr;

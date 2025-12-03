@@ -1,6 +1,9 @@
 #include "robotBase/RobotBase.h"
 #include <TeensyThreads.h>
 
+#include "device/Encoders/AMT10VEncoder/AMT10VEncoder.h"
+#include "device/Motors/DCMotor/DCMotor.h"
+
 static DCMotor motor;
 static AMT10VEncoder encoder;
 
@@ -8,7 +11,7 @@ void setup() {
 // write your initialization code here
     Serial.begin(9600);
 
-    encoder = initAMT10VEncoder(0, 1, 2, AMT10V_2048);
+    encoder = initAMT10VEncoder(0, 1, 2, AMT10V_2048, 1);
     registerEncoder(&encoder, AMT10V);
     motor = initDCMotor("motor", 10, 11, 12, &encoder, AMT10V);
 

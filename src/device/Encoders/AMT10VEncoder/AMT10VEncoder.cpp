@@ -1,8 +1,10 @@
 #include "AMT10VEncoder.h"
 
+#include <TeensyThreads.h>
+
 #include "robotBase/RobotBase.h"
 
-AMT10VEncoder initAMT10VEncoder(uint8_t pinA, uint8_t pinB, uint8_t pinX, AMT10VResolution resolution) {
+AMT10VEncoder initAMT10VEncoder(uint8_t pinA, uint8_t pinB, uint8_t pinX, AMT10VResolution resolution, double gearRatio) {
     AMT10VEncoder encoder;
     descriptor descriptor;
     descriptor.pins = (uint8_t*)malloc(sizeof(uint8_t) * 3);
@@ -21,12 +23,13 @@ AMT10VEncoder initAMT10VEncoder(uint8_t pinA, uint8_t pinB, uint8_t pinX, AMT10V
     pinMode(pinX, INPUT_PULLDOWN);
 
     encoder.resolution = resolution;
+    encoder.gearRatio = gearRatio;
     encoder.tickCount = 0;
     encoder.indexCount = 0;
     encoder.readEncoder = readAMT10VEncoder;
+    encoder.getDegrees = getDegrees;
 
     encoder.hardwareDescriptor = descriptor;
-
 
     return encoder;
 }
@@ -58,4 +61,15 @@ void readAMT10VEncoder(AMT10VEncoder* encoder) {
         }
         encoder->tickCount = 0;
     }
+}
+
+double getDegrees(AMT10VEncoder_t *encoder) {
+    int tickCount = encoder->tickCount + (encoder->indexCount * encoder->resolution);
+    double revolutions = ((double)tickCount / encoder->resolution) / encoder->gearRatio;
+
+    double radians = revolutions * 2 * PI;
+
+    double degrees = radians * (180/PI);
+
+    return degrees;
 }

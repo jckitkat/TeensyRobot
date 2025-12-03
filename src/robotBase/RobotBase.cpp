@@ -1,6 +1,8 @@
 #include "RobotBase.h"
 #include <TeensyThreads.h>
 
+#include "device/Encoders/AMT10VEncoder/AMT10VEncoder.h"
+
 [[noreturn]] void updateEncoders() {
     while (true) {
         if (robot.encoders == nullptr) {

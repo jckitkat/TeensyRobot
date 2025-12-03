@@ -1,6 +1,6 @@
 #pragma once
 #include "hardwareDescription/hardwareDescription.h"
-#include "device/encoderType.h"
+#include "device/Encoders/encoderType.h"
 
 #define DCMotor_PWM_Pin1 0
 #define DCMotor_PWM_Pin2 1

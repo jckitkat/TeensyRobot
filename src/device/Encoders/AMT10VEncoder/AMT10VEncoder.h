@@ -29,13 +29,18 @@ enum AMT10VResolution {
 typedef struct AMT10VEncoder {
     descriptor hardwareDescriptor;
     AMT10VResolution resolution;
+    // gear ratio from input to the encoder to the output of the mechanism
+    double gearRatio;
     int tickCount;
     int indexCount;
     void (*readEncoder)(AMT10VEncoder*);
+    double (*getDegrees)(AMT10VEncoder*);
     int prevTick;
     int prevIndex;
 } AMT10VEncoder_t;
 
-AMT10VEncoder_t initAMT10VEncoder(uint8_t pinA, uint8_t pinB, uint8_t pinX, AMT10VResolution resolution);
+AMT10VEncoder_t initAMT10VEncoder(uint8_t pinA, uint8_t pinB, uint8_t pinX, AMT10VResolution resolution, double gearRatio);
 
 void readAMT10VEncoder(AMT10VEncoder_t* encoder);
+
+double getDegrees(AMT10VEncoder_t* encoder);

@@ -1,5 +1,5 @@
 # pragma once
-#include "device/encoderType.h"
+#include "device/Encoders/encoderType.h"
 #include "hardwareDescription/hardwareDescription.h"
 
 struct SparkMax {
